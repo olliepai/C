@@ -1,7 +1,28 @@
-#include <stdio.h>
+#include "SDL/SDL.h"
 
 int main (int argc, char** argv) {
-    printf("Hello\n");
+    SDL_Init(SDL_INIT_VIDEO);
     
+    SDL_Window* window = SDL_CreateWindow("title", 0, 0, 800, 800, 0);
+    bool running = true;
+    SDL_Event event;
+
+    while (running) {
+        while (!SDL_PollEvent(&event)) {
+            switch (event.type) {
+                case SDL_QUIT:
+                    running = false;
+                    break;
+
+                case SDL_KEYDOWN:
+                    if (event.key.keysym.sym == SDLK_ESCAPE) {
+                        running = false;
+                    }
+                    break;
+            }
+        }
+    }
+    SDL_DestroyWindow(window);
+
     return 0;
 }
